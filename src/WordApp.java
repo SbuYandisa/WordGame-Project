@@ -28,7 +28,12 @@ public class WordApp {
 	static 	Score score = new Score();
 
 	static WordPanel w;
-	
+	static Thread thr;
+	static Thread thr1;
+   static JTextField textEntry ;
+   static JLabel caught;
+   static JLabel missed;
+   static JLabel scr;
 	
 	
 	public static void setupGUI(int frameX,int frameY,int yLimit) {
@@ -49,21 +54,22 @@ public class WordApp {
 	    
 	    JPanel txt = new JPanel();
 	    txt.setLayout(new BoxLayout(txt, BoxLayout.LINE_AXIS)); 
-	    JLabel caught =new JLabel("Caught: " + score.getCaught() + "    ");
-	    JLabel missed =new JLabel("Missed:" + score.getMissed()+ "    ");
-	    JLabel scr =new JLabel("Score:" + score.getScore()+ "    ");    
+	    caught=new JLabel("Caught: " + score.getCaught() + "   ");
+	    missed =new JLabel("Missed:" + score.getMissed()+ "    ");
+	    scr =new JLabel("Score:" + score.getScore()+ "    ");    
 	    txt.add(caught);
 	    txt.add(missed);
 	    txt.add(scr);
     
 	    //[snip]
   
-	    final JTextField textEntry = new JTextField("",20);
+	   textEntry= new JTextField("",20);
 	   textEntry.addActionListener(new ActionListener()
 	    {
 	      public void actionPerformed(ActionEvent evt) {
-	          String text = textEntry.getText();
-	          //[snip]
+	          String text= textEntry.getText();
+	          thr1 = new Thread(new CheckWord(text, words));
+             thr1.start();
 	          textEntry.setText("");
 	          textEntry.requestFocus();
 	      }
@@ -82,8 +88,10 @@ public class WordApp {
 		    {
 		      public void actionPerformed(ActionEvent e)
 		      {   
-		    	  Runnable start = new WordPanel(words, totalWords);
-		    	  new Thread(start).start();
+              w.clear = false;
+              score.resetScore();
+		    	  thr = new Thread(w);
+		    	  thr.start();
 		    	  textEntry.requestFocus();  //return focus to the text entry field
 		      }
 		    });
@@ -94,8 +102,11 @@ public class WordApp {
 			    {
 			      public void actionPerformed(ActionEvent e)
 			      {
-			    	  //[snip]
-			      }
+                  w.clear = true;
+                  setTextCaught("Caught:     ");
+                  setTextMissed("Missed:     ");
+                  setTextScore("Score:     ");
+                  }
 			    });
 		
 		JButton quitB = new JButton("Quit");;
@@ -120,8 +131,17 @@ public class WordApp {
 
 		
 	}
-
-	
+   public static void setTextCaught(String s){
+      caught.setText(s);
+   }
+   public static void setTextMissed(String s){
+      missed.setText(s);
+   }
+   public static void setTextScore(String s){
+      scr.setText(s);
+   }
+   
+   
 public static String[] getDictFromFile(String filename) {
 		String [] dictStr = null;
 		try {
