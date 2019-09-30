@@ -1,0 +1,9 @@
+#READ ME
+Run "make clean first" then run "make".
+Every java code will be compiled (this is done in Makefile).
+To run the main class:
+        Go to the src folder and run this command on the terminal.
+	/command: java WordApp "total number words" "words number on screen" "dictionary file"/
+Then the GUI window will pop-up and you can start the game :)
+
+
