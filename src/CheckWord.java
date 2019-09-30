@@ -1,11 +1,18 @@
 //This thread ckecks the word enterd if its correct and then increments number of words caught and the score
+import javax.swing.JLabel;
 public class CheckWord extends Thread{
     String input;
     WordRecord[] words;
-    
-    public CheckWord(String input, WordRecord[] words){
+    JLabel matching;
+    JLabel score;
+    Score scoreClass;
+
+    public CheckWord(String input, WordRecord[] words, JLabel matching, JLabel score, Score scoreClass){
       this.input=input;
       this.words=words;
+      this.matching=matching;
+      this.score=score;
+      this.scoreClass=scoreClass;
     }
     
     public void run(){
@@ -14,9 +21,9 @@ public class CheckWord extends Thread{
            if(words[i].matchWord(input)==true)
            {
                words[i].resetWord();
-               WordApp.score.caughtWord(input.length());
-               WordApp.setTextCaught("Caught: " + WordApp.score.getCaught() + "    ");
-               WordApp.setTextScore("Score:" + WordApp.score.getScore()+ "    "); 
+               scoreClass.caughtWord(input.length());
+               matching.setText("Caught: " + scoreClass.getCaught() + "    ");
+               score.setText("Score:" + scoreClass.getScore()+ "    "); 
            }
         }
 

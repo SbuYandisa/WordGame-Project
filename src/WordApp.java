@@ -47,7 +47,7 @@ public class WordApp {
       	g.setSize(frameX,frameY);
  
     	
-		w = new WordPanel(words,yLimit);
+		w = new WordPanel(words,yLimit, score, missed);
 		w.setSize(frameX,yLimit+100);
 	    g.add(w);
 	    
@@ -68,7 +68,7 @@ public class WordApp {
 	    {
 	      public void actionPerformed(ActionEvent evt) {
 	          String text= textEntry.getText();
-	          thr1 = new Thread(new CheckWord(text, words));
+	          thr1 = new Thread(new CheckWord(text, words, caught, scr, score));
              thr1.start();
 	          textEntry.setText("");
 	          textEntry.requestFocus();
@@ -165,10 +165,10 @@ public static String[] getDictFromFile(String filename) {
 	public static void main(String[] args) {
     	
 		//deal with command line arguments
-		totalWords=Integer.parseInt("20");  //total words to fall
-		noWords=Integer.parseInt("4"); // total words falling at any point
+		totalWords=Integer.parseInt(args[0]);  //total words to fall
+		noWords=Integer.parseInt(args[1]); // total words falling at any point
 		assert(totalWords>=noWords); // this could be done more neatly
-		String[] tmpDict=getDictFromFile("example_dict.txt"); //file of words
+		String[] tmpDict=getDictFromFile(args[2]); //file of words
 		if (tmpDict!=null)
 			dict= new WordDictionary(tmpDict);
 		

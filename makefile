@@ -7,7 +7,7 @@ BINDIR=bin
 $(BINDIR)/%.class:$(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
 
-CLASSES=WordDictionary.class WordRecord.class Score.class Simulate.class WordApp.class WordPanel.class CheckWord.class
+CLASSES=WordDictionary.class WordRecord.class Score.class Simulate.class CheckWord.class WordPanel.class WordApp.class
 CLASS_FILES=$(CLASSES:%.class=$(BINDIR)/%.class)
 
 default: $(CLASS_FILES)
