@@ -1,5 +1,5 @@
 #READ ME
-Run "make clean first" then run "make".
+Run "make clean first" then run "make" on the terminal, linux is recommended.
 Every java code will be compiled (this is done in Makefile).
 To run the main class:
         Go to the src folder and run this command on the terminal.
